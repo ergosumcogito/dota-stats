@@ -14,7 +14,7 @@ function App() {
                 ...hero,
                 winrate: hero.pro_win && hero.pro_pick ? hero.pro_win / hero.pro_pick : 0,
               }))
-              .filter((hero) => hero.pro_pick > 50) // filter out low pick heroes
+              .filter((hero) => hero.pro_pick > 10) // filter out low pick heroes
               .sort((a, b) => b.winrate - a.winrate)
               .slice(0, 10); // top 10
 
