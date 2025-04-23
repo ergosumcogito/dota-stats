@@ -30,12 +30,13 @@ function App() {
                 {topHeroes.map((hero) => (
                     <li
                         key={hero.id}
-                        className="flex items-center odd:bg-gray-700 even:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-xl transition-shadow duration-300 hover:bg-slate-500 hover:scale-105 transform"
+                        className="group flex items-center bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-xl transition-all duration-500 hover:bg-slate-700 hover:scale-105 transform"
                     >
+                        {/* Hero icon with animation on hover */}
                         <img
                             src={`https://dotabase.dillerm.io/vpk/panorama/images/heroes/icons/${hero.name}_png.png`}
                             alt={hero.localized_name}
-                            className="hero-img w-12 h-12 mr-4 rounded-full"
+                            className="hero-img w-12 h-12 mr-4 rounded-full group-hover:animate-bounce"
                         />
                         <span className="text-lg font-medium">{hero.localized_name} - {(hero.winrate * 100).toFixed(2)}%</span>
                     </li>
