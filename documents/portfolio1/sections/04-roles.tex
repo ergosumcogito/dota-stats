@@ -1,3 +1,37 @@
 \section{User Roles and Interactions}
-Description of different types of users (e.g., admin,
-student, customer). Typical user actions and expected outcomes.
+Because we develop analytics web app (Dashboard) and focus on data fetching, processing and visualization,
+we have only one user role.
+
+\subsection{User's actions}
+
+\paragraph{Action:} Type in-game user ID, press Search.
+\\
+\textbf{Outcome:}
+    \begin{itemize}
+        \item \textbf{Correct ID:} Player’s profile opens, analytical data is shown.
+        \item \textbf{Wrong ID:} Error message under search bar is displayed.
+    \end{itemize}
+
+
+
+\paragraph{Action:} On Hero's Stats page, tap on win rate column.
+\\
+\textbf{Outcome:}
+    \begin{itemize}
+        \item \textbf{Expected behavior:}  Hero's list is sorted base on win rate.
+    \end{itemize}
+
+\paragraph{Action:} On Hero's Stats page, tap on particular hero.
+\\
+\textbf{Outcome:}
+\begin{itemize}
+    \item \textbf{Expected behavior:} Selected hero's page opens, best items for this hero are displayed.
+\end{itemize}
+
+\paragraph{Action:} After successfully searching a profile, users presses bookmark button.
+\\
+\textbf{Outcome:}
+\begin{itemize}
+    \item \textbf{Expected behavior:} This profile is saved in cookies.
+    Then user updates the page, in profile search tab this profile ID is shown.
+\end{itemize}
