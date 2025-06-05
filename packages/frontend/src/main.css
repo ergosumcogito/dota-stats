@@ -1,1 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
+
+
+@theme {
+    --font-*:initial;
+    --font-sans: "Inter", sans-serif;
+
+    --color-primary: #b325ff;
+    --color-secondary: #00c49a;
+    --color-text: #ffffff;
+    --color-accent: #fb8f67;
+    --color-background: #0f172b;
+    --color-box: #172340;
+}
+
+@layer components {
+    .btn {
+        @apply text-shadow-lg/50;
+        @apply px-10 py-8 rounded text-white font-sans font-bold transition-colors duration-200;
+    }
+    .start-btn-player {
+        @apply bg-blue-600 hover:bg-blue-700;
+    }
+    .start-btn-meta {
+        @apply bg-green-600 hover:bg-green-700;
+    }
+    .start-btn-hero {
+        background-image: url("assets/button_heroStats.png");
+        background-size: cover;
+        background-position: center;
+
+        filter: brightness(1.0);
+    }
+
+    .start-btn-hero:hover {
+        filter: brightness(0.75);
+    }
+}

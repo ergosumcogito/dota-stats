@@ -1,0 +1,68 @@
+\section{Summary of Requirements}
+
+This section summarizes the core functional and non-functional requirements for the \textit{Dota Stats} web application. These requirements form the basis for the design, implementation and evaluation of the application.
+
+\subsection{Functional Requirements}
+
+\begin{itemize}
+    \item \textbf{Player Profile Search}
+    \begin{itemize}
+        \item Users can search for a Dota 2 player by entering a player ID.
+        \item Display the match history including hero played, match result, and duration.
+        \item Show overall and per-hero win rates, the most efficient hero, and the current rank.
+    \end{itemize}
+
+    \item \textbf{Hero Statistics}
+    \begin{itemize}
+        \item List all heroes with their win and pick rates based on overall range, and different rank ranges.
+        \item Support sorting by each of these statistics.
+    \end{itemize}
+
+    \item \textbf{Hero Matrix}
+    \begin{itemize}
+        \item Interactive matrix showing all heroes based on four categories (strength, agility, intelligence and universal).
+        \item Users can click on any hero to open a detailed screen of the selected hero.
+    \end{itemize}
+
+
+    \item \textbf{Selected Hero Analysis}
+    \begin{itemize}
+        \item Show suggested item builds for start game, early game, mid game and late game.
+        \item Display base characteristics of selected heroes (e.g., health, mana, movement speed).
+        \item Provide hero matchup information.
+        \item Hovering over items display item cost and characteristics.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+
+\begin{itemize}
+    \item \textbf{Usability}
+    \begin{itemize}
+        \item Interface should be intuitive with minimal need for instructions.
+        \item Important data should be easy to find and interpret.
+    \end{itemize}
+
+    \item \textbf{Performance}
+    \begin{itemize}
+        \item Fast response time for searches and data visualizations.
+        \item Smooth rendering even with large datasets.
+    \end{itemize}
+
+    \item \textbf{Responsiveness}
+    \begin{itemize}
+        \item Layout and components must adapt to different screen sizes.
+    \end{itemize}
+
+    \item \textbf{Accessibility}
+    \begin{itemize}
+        \item Conform to WCAG 2.1 guidelines.
+        \item Ensure legible color contrast.
+    \end{itemize}
+
+    \item \textbf{Technical Stack Assumptions}
+    \begin{itemize}
+        \item React, Tailwind CSS, Vite.
+        \item Data from OpenDota API.
+    \end{itemize}
+\end{itemize}

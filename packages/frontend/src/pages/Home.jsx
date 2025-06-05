@@ -1,18 +1,21 @@
 import { Link } from 'react-router-dom';
+import logo from 'assets/logo.png';
 
 export default function Home() {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-            <h1 className="text-4xl font-bold mb-6">Welcome to Dota 2 Stats Hub</h1>
+            <img src={logo} className="w-72 h-72 object-contain" alt="Logo"/>
+            <h1 className="text-5xl font-sans font-[800] text-text mb-2">Dota Stats</h1>
+            <h2 className="text-xl font-sans font-[400] text-primary mb-12">Know the meta. Become <em className="italic">undefeatable</em>.</h2>
             <nav className="space-x-4">
-                <Link to="/player-search" className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
-                    Player Search
+                <Link to="/player-search" className="btn start-btn-player">
+                    Player's Profile
                 </Link>
-                <Link to="/hero-list" className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">
-                    Hero List
+                <Link to="/hero-list" className="btn start-btn-meta">
+                    Heroes Meta
                 </Link>
-                <Link to="/hero-matrix" className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">
-                    Hero Matrix
+                <Link to="/hero-matrix" className="btn start-btn-hero">
+                    Hero's Stats
                 </Link>
             </nav>
         </div>
