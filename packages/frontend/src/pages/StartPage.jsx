@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from 'assets/logo.png';
 
-export default function Home() {
+export default function StartPage() {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
             <img src={logo} className="w-72 h-72 object-contain" alt="Logo"/>
