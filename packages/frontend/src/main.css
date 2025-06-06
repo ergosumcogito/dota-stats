@@ -1,11 +1,11 @@
-@import "tailwindcss";
-
 /* Font */
+@import "tailwindcss";
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/400-italic.css";
 @import "@fontsource/inter/600.css";
 @import "@fontsource/inter/800.css";
 
+@tailwind utilities;
 
 @theme {
     --font-*:initial;
@@ -22,14 +22,35 @@
 @layer components {
     .btn {
         @apply text-shadow-lg/50;
-        @apply px-10 py-8 rounded text-white font-sans font-bold transition-colors duration-200;
+        @apply rounded text-white font-sans font-bold transition-colors duration-200;
+
+        @apply px-2 py-7 w-auto max-w-[180px] min-w-[140px] text-center;
+
     }
     .start-btn-player {
-        @apply bg-blue-600 hover:bg-blue-700;
+        background-image: url("assets/button_playerProfile.png");
+        background-size: cover;
+        background-position: center;
+
+        filter: brightness(1.0);    }
+
+    .start-btn-player:hover {
+        filter: brightness(0.75);
     }
+
+
     .start-btn-meta {
-        @apply bg-green-600 hover:bg-green-700;
+        background-image: url("assets/button_heroMeta.jpg");
+        background-size: cover;
+        background-position: center;
+
+        filter: brightness(1.0);    }
+
+    .start-btn-meta:hover {
+        filter: brightness(0.75);
     }
+
+
     .start-btn-hero {
         background-image: url("assets/button_heroStats.png");
         background-size: cover;
