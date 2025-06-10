@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from 'components/SearchBar';
 import PlayerProfileHeader from 'components/PlayerProfileHeader';
-import playerProfileService from "services/playerProfileService";
+import playerProfileService from "services/PlayerProfileService";
 
 const PlayerProfilePage = () => {
     const [playerId, setPlayerId] = useState('');
@@ -20,7 +20,7 @@ const PlayerProfilePage = () => {
 
     return (
         <div>
-            <h1>Player Profile</h1>
+            <h1>Player Profile (test with ID 321580662)</h1>
 
             <SearchBar value={playerId} onChange={(e) => setPlayerId(e.target.value)} onSearch={handleSearch} />
             <PlayerProfileHeader profileHeaderData={profileHeaderData} />
