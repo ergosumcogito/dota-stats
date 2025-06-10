@@ -19,6 +19,10 @@
     --color-box: #172340;
 }
 
+body {
+    @apply bg-background text-text;
+}
+
 @layer components {
     .btn {
         @apply text-shadow-lg/50;
