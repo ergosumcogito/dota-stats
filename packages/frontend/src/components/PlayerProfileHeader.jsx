@@ -1,4 +1,5 @@
 import React from 'react';
+import steamIcon from 'assets/steam.svg'
 
 const PlayerProfileHeader = ({ profileHeaderData }) => {
     if (!profileHeaderData) return null;
@@ -15,7 +16,7 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
     } = profileHeaderData;
 
     return (
-        <div className="w-full p-4 bg-box rounded-2xl shadow-lg relative overflow-hidden text-white">
+        <div className="w-full p-4 bg-box shadow-lg relative overflow-hidden text-white">
             {/* Hero background image */}
             {heroImage && (
                 <div
@@ -44,7 +45,7 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline text-sm"
                         >
-                            View Steam Profile
+                            <img src={steamIcon} alt="Steam" className="w-3 h-3" />
                         </a>
                         <p className="mt-1 text-sm">
                             Rank Tier: {rank_tier || 'N/A'}{' '}

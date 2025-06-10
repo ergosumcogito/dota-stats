@@ -11,7 +11,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
                 onChange={onChange}
             />
             <button
-                className="mt-2 p-2 bg-blue-500 text-white rounded"
+                className="mt-2 p-2 bg-primary text-text rounded"
                 onClick={onSearch}
             >
                 Search

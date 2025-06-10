@@ -19,7 +19,7 @@ const PlayerProfilePage = () => {
     };
 
     return (
-        <div>
+        <div className="px-4">
             <h1>Player Profile (test with ID 321580662)</h1>
 
             <SearchBar value={playerId} onChange={(e) => setPlayerId(e.target.value)} onSearch={handleSearch} />
