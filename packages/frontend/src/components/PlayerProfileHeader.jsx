@@ -39,12 +39,12 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
                 {/* Background hero image */}
                 {heroImage && (
                     <div
-                        className="absolute inset-0 bg-cover bg-center opacity-20"
+                        className="absolute inset-0 bg-cover bg-center opacity-50"
                         style={{ backgroundImage: `url(${heroImage})` }}
                     />
                 )}
                 {/* Overlay to darken */}
-                <div className="absolute inset-0 bg-box bg-opacity-40" />
+                <div className="absolute inset-0 bg-opacity-40" />
                 {/* Content */}
                 <div className="relative z-10 flex flex-col justify-center h-full">
                     <h2 className="text-3xl font-bold mb-2">{profile.personaname}</h2>
