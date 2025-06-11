@@ -1,7 +1,7 @@
 import React from 'react';
 import steamIcon from 'assets/steam.svg';
 
-const PlayerProfileHeader = ({ profileHeaderData }) => {
+const PlayerProfileHeader = ({profileHeaderData}) => {
     if (!profileHeaderData) return null;
 
     const {
@@ -16,9 +16,10 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
     } = profileHeaderData;
 
     return (
-        <div className="w-full p-4 bg-box shadow-lg text-white relative flex flex-row gap-4 items-stretch overflow-hidden">
+        <div
+            className="w-full p-4 bg-box shadow-lg text-white relative flex flex-row gap-4 items-start overflow-hidden">
             {/* LEFT: Avatar and Steam */}
-            <div className="flex flex-col items-center justify-center min-w-[100px]">
+            <div className="flex flex-col items-start justify-start min-w-[100px]">
                 <img
                     src={profile.avatarfull}
                     alt="Avatar"
@@ -30,7 +31,7 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
                     rel="noopener noreferrer"
                     className="text-primary hover:underline text-xs flex items-center gap-1"
                 >
-                    <img src={steamIcon} alt="Steam" className="w-4 h-4" />
+                    <img src={steamIcon} alt="Steam" className="w-6 h-6"/>
                 </a>
             </div>
 
@@ -40,17 +41,20 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
                 {heroImage && (
                     <div
                         className="absolute inset-0 bg-cover bg-center opacity-50"
-                        style={{ backgroundImage: `url(${heroImage})` }}
+                        style={{backgroundImage: `url(${heroImage})`}}
                     />
                 )}
                 {/* Overlay to darken */}
-                <div className="absolute inset-0 bg-opacity-40" />
+                <div className="absolute inset-0 bg-opacity-40"/>
                 {/* Content */}
                 <div className="relative z-10 flex flex-col justify-center h-full">
                     <h2 className="text-3xl font-bold mb-2">{profile.personaname}</h2>
-                    <div className="text-sm md:text-base space-y-1">
+                    <div className="text-sm md:text-xl space-y-1">
                         <p>
-                            <span className="font-bold">Winrate:</span> {winrate}%
+                            <span className="font-bold">WR:</span>{' '}
+                            <span className={winrate >= 50 ? 'text-secondary' : 'text-accent'}>
+                                {winrate}%
+                            </span>
                         </p>
                         <p className="text-gray-300">
                             ({wins}W / {losses}L)
