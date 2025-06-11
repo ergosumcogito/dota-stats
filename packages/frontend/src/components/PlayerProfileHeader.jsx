@@ -50,24 +50,34 @@ const PlayerProfileHeader = ({profileHeaderData}) => {
                 <div className="relative z-10 flex flex-col justify-center h-full">
                     <h2 className="text-3xl font-bold mb-2">{profile.personaname}</h2>
                     <div className="text-sm md:text-xl space-y-1">
-                        <p>
-                            <span className="font-bold">WR:</span>{' '}
-                            <span className={winrate >= 50 ? 'text-secondary' : 'text-accent'}>
-                                {winrate}%
-                            </span>
-                        </p>
-                        <p className="text-gray-300">
-                            ({wins}W / {losses}L)
-                        </p>
-                        <p>
-                            <span className="font-semibold">KDA:</span> {kda}
-                        </p>
+                        <div className="flex flex-row gap-x-20 items-start">
+                            {/* WR */}
+                            <div className="flex flex-col">
+                                <p>
+                                    <span className="font-bold">WR:</span>{' '}
+                                    <span className={winrate >= 50 ? 'text-secondary' : 'text-accent'}>
+                                        {winrate}%
+                                    </span>
+                                </p>
+                                <p className="text-text text-sm">
+                                    ({wins}W / {losses}L)
+                                </p>
+                            </div>
+                            {/* KDA */}
+                            <div className="flex flex-col">
+                                <p>
+                                    {kda}
+                                </p>
+                                <p className="text-text text-sm">Average KDA</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
             {/* RIGHT: Rank info */}
-            <div className="flex flex-col justify-center items-end min-w-[120px] text-right">
+            <div className="flex flex-col justify-center items-center min-w-[120px] text-right">
                 <p className="text-sm">
                     <span className="font-semibold">Rank Tier:</span> {rank_tier || 'N/A'}
                 </p>
