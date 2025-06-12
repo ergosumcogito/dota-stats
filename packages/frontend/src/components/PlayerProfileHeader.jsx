@@ -22,7 +22,7 @@ const AvatarSection = ({ profile }) => (
 
 // Stats section with hero background (CENTER)
 const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
-    <div className="relative flex-1 pt-3 px-4 overflow-hidden">
+    <div className="relative flex-1 aspect-[22/9] max-w-[500px] pt-3 px-4 overflow-hidden">
         {heroImage && (
             <div
                 className="absolute inset-0 bg-cover bg-center"
