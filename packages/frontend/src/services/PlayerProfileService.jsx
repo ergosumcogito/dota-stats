@@ -1,10 +1,10 @@
 import heroService from "services/HeroService";
 
-const fetchPlayerHeaderData = async (playerId) => {
+const fetchPlayerHeaderData = async (playerId, numMatches=50) => {
     try {
         const [profileRes, wlRes, matchesRes] = await Promise.all([
            fetch(`https://api.opendota.com/api/players/${playerId}`),
-           fetch(`https://api.opendota.com/api/players/${playerId}/wl?limit=50`),
+           fetch(`https://api.opendota.com/api/players/${playerId}/wl?limit=${numMatches}`),
            fetch(`https://api.opendota.com/api/players/${playerId}/recentMatches`),
         ]);
 
@@ -34,13 +34,15 @@ const fetchPlayerHeaderData = async (playerId) => {
 
         // Average KDA
         let kills = 0, deaths = 0, assists = 0;
-        recentMatches.slice(0, 20).forEach(match => {
+        recentMatches.slice(0, numMatches).forEach(match => {
             kills += match.kills;
             deaths += match.deaths;
             assists += match.assists;
         });
 
-        const kda = deaths === 0 ? kills + assists : ((kills + assists) / deaths).toFixed(2);
+        const averageKills = (kills / numMatches).toFixed(1);
+        const averageDeaths = (deaths / numMatches).toFixed(1);
+        const averageAssists = (assists / numMatches).toFixed(1);
 
         return {
             profile: profileData.profile,
@@ -49,7 +51,9 @@ const fetchPlayerHeaderData = async (playerId) => {
             wins: wlData.win,
             losses: wlData.lose,
             winrate: ((wlData.win / (wlData.win + wlData.lose)) * 100).toFixed(1),
-            kda,
+            averageKills: averageKills,
+            averageDeaths: averageDeaths,
+            averageAssists: averageAssists,
             mostPlayedHeroId,
             heroImage,
         };

@@ -21,7 +21,7 @@ const AvatarSection = ({ profile }) => (
 );
 
 // Stats section with hero background (CENTER)
-const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
+const StatsSection = ({ profile, heroImage, winrate, wins, losses, averageKills, averageDeaths, averageAssists }) => (
     <div className="relative flex-1 aspect-[22/9] max-w-[500px] pt-3 px-4 overflow-hidden">
         {heroImage && (
             <div
@@ -40,8 +40,8 @@ const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
                         <p>
                             <span className="font-bold">WR:</span>{' '}
                             <span className={winrate >= 50 ? 'text-secondary' : 'text-accent'}>
-                {winrate}%
-              </span>
+                                    {winrate}%
+                            </span>
                         </p>
                         <p className="text-text text-sm">
                             Wins:{wins} Losses:{losses}
@@ -50,7 +50,11 @@ const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
                     </div>
                     {/* KDA */}
                     <div className="flex flex-col">
-                        <p>{kda}</p>
+                        <p>
+                            <span className="text-secondary">{averageKills}</span> /{' '}
+                            <span className="text-accent">{averageDeaths}</span> /{' '}
+                            <span className="text-text">{averageAssists}</span>
+                        </p>
                         <p className="text-text text-sm">Average KDA</p>
                     </div>
                 </div>
@@ -102,7 +106,9 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
         wins,
         losses,
         winrate,
-        kda,
+        averageKills,
+        averageDeaths,
+        averageAssists,
         heroImage,
     } = profileHeaderData;
 
@@ -115,7 +121,9 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
                 winrate={winrate}
                 wins={wins}
                 losses={losses}
-                kda={kda}
+                averageKills={averageKills}
+                averageDeaths={averageDeaths}
+                averageAssists={averageAssists}
             />
             <RankSection rank_tier={rank_tier} leaderboard_rank={leaderboard_rank} />
         </div>
