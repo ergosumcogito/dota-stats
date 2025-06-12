@@ -25,12 +25,11 @@ const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
     <div className="relative flex-1 pt-3 px-4 overflow-hidden">
         {heroImage && (
             <div
-                className="absolute inset-0 bg-cover bg-center opacity-50"
+                className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${heroImage})` }}
             />
         )}
-        {/* Overlay to darken the background  TODO check if needed and probably remove */}
-        <div className="absolute inset-0 bg-opacity-40" />
+        <div className="absolute inset-0 bg-background/50"/>
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-start h-full">
             <h2 className="text-3xl font-bold mb-2">{profile.personaname}</h2>
