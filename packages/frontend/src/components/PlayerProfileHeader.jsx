@@ -15,7 +15,7 @@ const AvatarSection = ({ profile }) => (
             rel="noopener noreferrer"
             className="text-primary hover:underline text-xs flex items-center gap-1"
         >
-            <img src={steamIcon} alt="Steam" className="w-6 h-6" />
+            <img src={steamIcon} alt="Steam" className="w-7 h-7" />
         </a>
     </div>
 );
@@ -44,8 +44,9 @@ const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
               </span>
                         </p>
                         <p className="text-text text-sm">
-                            ({wins}W / {losses}L)
+                            Wins:{wins} Losses:{losses}
                         </p>
+                        <WinrateBar wins={wins} losses={losses} />
                     </div>
                     {/* KDA */}
                     <div className="flex flex-col">
@@ -57,6 +58,27 @@ const StatsSection = ({ profile, heroImage, winrate, wins, losses, kda }) => (
         </div>
     </div>
 );
+
+const WinrateBar = ({ wins, losses }) => {
+    const total = wins + losses;
+    const winPercent = (wins / total) * 100;
+    const lossPercent = (losses / total) * 100;
+
+    return (
+        <div className="w-full h-2 mt-1 rounded-full bg-gray-700 overflow-hidden flex">
+            <div
+                className="bg-secondary"
+                style={{ width: `${winPercent}%` }}
+                title={`Wins: ${wins}`}
+            />
+            <div
+                className="bg-accent"
+                style={{ width: `${lossPercent}%` }}
+                title={`Losses: ${losses}`}
+            />
+        </div>
+    );
+};
 
 // Rank info section (RIGHT)
 const RankSection = ({ rank_tier, leaderboard_rank }) => (

@@ -4,7 +4,7 @@ const fetchPlayerHeaderData = async (playerId) => {
     try {
         const [profileRes, wlRes, matchesRes] = await Promise.all([
            fetch(`https://api.opendota.com/api/players/${playerId}`),
-           fetch(`https://api.opendota.com/api/players/${playerId}/wl?limit=20`),
+           fetch(`https://api.opendota.com/api/players/${playerId}/wl?limit=50`),
            fetch(`https://api.opendota.com/api/players/${playerId}/recentMatches`),
         ]);
 
