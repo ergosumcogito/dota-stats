@@ -44,9 +44,17 @@ const fetchPlayerHeaderData = async (playerId, numMatches=50) => {
         const averageDeaths = (deaths / numMatches).toFixed(1);
         const averageAssists = (assists / numMatches).toFixed(1);
 
+        // Rank Icon
+        const rankTier = profileData.rank_tier;
+        const rankIconId = rankTier ? Math.floor(rankTier / 10) : null;
+        const rankIconUrl = rankIconId
+            ? `https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_${rankIconId}.png`
+            : null;
+
         return {
             profile: profileData.profile,
             rank_tier: profileData.rank_tier,
+            rank_icon: rankIconUrl,
             leaderboard_rank: profileData.leaderboard_rank,
             wins: wlData.win,
             losses: wlData.lose,

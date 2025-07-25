@@ -22,7 +22,7 @@ const AvatarSection = ({ profile }) => (
 
 // Stats section with hero background (CENTER)
 const StatsSection = ({ profile, heroImage, winrate, wins, losses, averageKills, averageDeaths, averageAssists }) => (
-    <div className="relative flex-1 aspect-[22/9] max-w-[500px] pt-3 px-4 overflow-hidden">
+    <div className="relative flex-1 aspect-[22/9] max-w-[500px] pt-3 px-4">
         {heroImage && (
             <div
                 className="absolute inset-0 bg-cover bg-center"
@@ -85,8 +85,15 @@ const WinrateBar = ({ wins, losses }) => {
 };
 
 // Rank info section (RIGHT)
-const RankSection = ({ rank_tier, leaderboard_rank }) => (
+const RankSection = ({ rank_tier, rank_icon, leaderboard_rank }) => (
     <div className="flex flex-col justify-center items-center min-w-[120px] text-right">
+        {rank_icon && (
+            <img
+                src={rank_icon}
+                alt={`Rank icon ${rank_tier}`}
+                className="w-32 h-auto mb-2"
+            />
+        )}
         <p className="text-sm">
             <span className="font-semibold">Rank Tier:</span> {rank_tier || 'N/A'}
         </p>
@@ -102,6 +109,7 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
     const {
         profile,
         rank_tier,
+        rank_icon,
         leaderboard_rank,
         wins,
         losses,
@@ -125,7 +133,7 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
                 averageDeaths={averageDeaths}
                 averageAssists={averageAssists}
             />
-            <RankSection rank_tier={rank_tier} leaderboard_rank={leaderboard_rank} />
+            <RankSection rank_tier={rank_tier} rank_icon={rank_icon} leaderboard_rank={leaderboard_rank} />
         </div>
     );
 };
