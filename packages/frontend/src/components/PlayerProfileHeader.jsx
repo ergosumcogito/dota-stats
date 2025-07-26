@@ -103,8 +103,8 @@ const RankSection = ({ rank_tier, rank_icon, leaderboard_rank }) => (
     </div>
 );
 
-const PlayerProfileHeader = ({ profileHeaderData }) => {
-    if (!profileHeaderData) return null;
+const PlayerProfileHeader = ({ playerProfileData }) => {
+    if (!playerProfileData) return null;
 
     const {
         profile,
@@ -118,7 +118,7 @@ const PlayerProfileHeader = ({ profileHeaderData }) => {
         averageDeaths,
         averageAssists,
         heroImage,
-    } = profileHeaderData;
+    } = playerProfileData;
 
     return (
         <div className="w-full p-4 bg-box shadow-lg text-white relative flex flex-row gap-4 items-stretch overflow-hidden">
