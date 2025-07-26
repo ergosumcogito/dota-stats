@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import SearchBar from 'components/SearchBar';
 import PlayerProfileHeader from 'components/PlayerProfileHeader';
 import { usePlayerProfile } from 'hooks/usePlayerProfile';
+import {useNavigate, useParams} from "react-router-dom";
 
 const PlayerProfilePage = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [playerId, setPlayerId] = useState('');
+    const { playerId: playerIdFromUrl } = useParams(); // get playerId from URL
+    const navigate = useNavigate();
+
+    const [inputValue, setInputValue] = useState(playerIdFromUrl || '');
+    const [playerId, setPlayerId] = useState(playerIdFromUrl|| '');
     const { playerProfileData, loading, error } = usePlayerProfile(playerId);
 
     const handleSearch = () => {
-      setPlayerId(inputValue.trim());
+        const trimmed = inputValue.trim();
+        if (trimmed) {
+            // React router change the URL
+            navigate(`/player-search/${trimmed}`);
+            // Change state ???
+            setPlayerId(trimmed);
+        }
     };
+
+    useEffect(() => {
+        if (playerIdFromUrl && playerIdFromUrl !== playerId) {
+            setInputValue(playerIdFromUrl);
+            setPlayerId(playerIdFromUrl);
+        }
+    }, [playerIdFromUrl]);
 
     return (
         <div className="px-4">
