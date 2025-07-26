@@ -18,7 +18,7 @@ const getHeroImageById = async (heroId) => {
     if (!hero) return null;
 
     const name = hero.name.replace('npc_dota_hero_', '');
-    return `https://cdn.dota2.com/apps/dota2/images/heroes/${name}_full.png`;
+    return `https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/${name}_full.png`;
 };
 
 export default { fetchHeroes, getHeroImageById };
