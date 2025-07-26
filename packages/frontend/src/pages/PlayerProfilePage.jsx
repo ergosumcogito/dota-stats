@@ -3,6 +3,7 @@ import SearchBar from 'components/SearchBar';
 import PlayerProfileHeader from 'components/PlayerProfileHeader';
 import { usePlayerProfile } from 'hooks/usePlayerProfile';
 import {useNavigate, useParams} from "react-router-dom";
+import PlayerStatsOverview from "components/PlayerStatsOverview";
 
 const PlayerProfilePage = () => {
     const { playerId: playerIdFromUrl } = useParams(); // get playerId from URL
@@ -10,7 +11,7 @@ const PlayerProfilePage = () => {
 
     const [inputValue, setInputValue] = useState(playerIdFromUrl || '');
     const [playerId, setPlayerId] = useState(playerIdFromUrl|| '');
-    const { playerProfileData, loading, error } = usePlayerProfile(playerId);
+    const { playerProfileData, playerStatsData, loading, error } = usePlayerProfile(playerId);
 
     const handleSearch = () => {
         const trimmed = inputValue.trim();
@@ -42,6 +43,7 @@ const PlayerProfilePage = () => {
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error.message}</p>}
             {playerProfileData && <PlayerProfileHeader playerProfileData={playerProfileData} />}
+            {playerStatsData && <PlayerStatsOverview stats={playerStatsData} />}
         </div>
     );
 };

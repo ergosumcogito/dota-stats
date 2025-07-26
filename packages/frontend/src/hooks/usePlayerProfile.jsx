@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import playerProfileService from 'services/PlayerProfileService';
-import { mapHeaderData } from 'utils/PlayerMappers';
+import { mapHeaderData, mapStatsData } from 'utils/PlayerMappers';
 
 export const usePlayerProfile = (playerId) => {
     const [playerProfileData, setPlayerProfileData] = useState(null);
+    const [playerStatsData, setPlayerStatsData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         if (!playerId) {
             setPlayerProfileData(null);
+            setPlayerStatsData(null);
             return;
         }
 
@@ -18,11 +20,14 @@ export const usePlayerProfile = (playerId) => {
             setError(null);
             try {
                 const rawData = await playerProfileService.fetchPlayerRawData(playerId);
-                const mappedData = await mapHeaderData(rawData);
-                setPlayerProfileData(mappedData);
+                const mappedHeader = await mapHeaderData(rawData);
+                const mappedStats = await mapStatsData({recentMatches: rawData.recentMatches});
+                setPlayerProfileData(mappedHeader);
+                setPlayerStatsData(mappedStats);
             } catch (e) {
                 setError(e);
                 setPlayerProfileData(null);
+                setPlayerStatsData(null);
             } finally {
                 setLoading(false);
             }
@@ -31,5 +36,5 @@ export const usePlayerProfile = (playerId) => {
         fetchData();
     }, [playerId]);
 
-    return { playerProfileData, loading, error };
+    return { playerProfileData, playerStatsData, loading, error };
 };

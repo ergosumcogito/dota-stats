@@ -36,7 +36,7 @@ export const mapHeaderData = async ({ profile, wl, recentMatches }) => {
     };
 };
 
-export const mapStatsData = ({ recentMatches }) => {
+export const mapStatsData = async ({ recentMatches }) => {
     let maxKills = -1, maxKillsHero = null;
     let maxDeaths = -1, maxDeathsHero = null;
     let maxAssists = -1, maxAssistsHero = null;
@@ -62,15 +62,28 @@ export const mapStatsData = ({ recentMatches }) => {
         }
     });
 
+    // Fetch hero images asynchronously
+    const maxKillsHeroImage = maxKillsHero ? await heroService.getHeroMiniIconById(maxKillsHero) : null;
+    const maxDeathsHeroImage = maxDeathsHero ? await heroService.getHeroMiniIconById(maxDeathsHero) : null;
+    const maxAssistsHeroImage = maxAssistsHero ? await heroService.getHeroMiniIconById(maxAssistsHero) : null;
+
     return {
         averageKills: (kills / recentMatches.length).toFixed(1),
         averageDeaths: (deaths / recentMatches.length).toFixed(1),
         averageAssists: (assists / recentMatches.length).toFixed(1),
+
         maxKills,
         maxKillsHero,
+        maxKillsHeroImage,
+
         maxDeaths,
         maxDeathsHero,
+        maxDeathsHeroImage,
+
         maxAssists,
         maxAssistsHero,
+        maxAssistsHeroImage,
     };
 };
+
+
