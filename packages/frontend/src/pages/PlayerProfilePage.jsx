@@ -31,7 +31,8 @@ const PlayerProfilePage = () => {
     }, [playerIdFromUrl]);
 
     return (
-        <div className="px-4">
+        <div className="flex justify-center">
+        <div className="w-full max-w-5xl px-4">
             <h1>Player Profile (test with ID 127324702, 106305042)</h1>
 
             <SearchBar
@@ -44,6 +45,7 @@ const PlayerProfilePage = () => {
             {error && <p style={{ color: 'red' }}>{error.message}</p>}
             {playerProfileData && <PlayerProfileHeader playerProfileData={playerProfileData} />}
             {playerStatsData && <PlayerStatsOverview stats={playerStatsData} />}
+        </div>
         </div>
     );
 };

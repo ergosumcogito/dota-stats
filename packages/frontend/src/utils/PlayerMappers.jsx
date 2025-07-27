@@ -41,12 +41,21 @@ export const mapStatsData = async ({ recentMatches }) => {
     let maxDeaths = -1, maxDeathsHero = null;
     let maxAssists = -1, maxAssistsHero = null;
 
+    let maxGPM = -1, maxGpmHero = null;
+    let maxXPM = -1, maxXpmHero = null;
+    let maxHeroDamage = -1, maxHeroDamageHero = null;
+
     let kills = 0, deaths = 0, assists = 0;
+    let gpm = 0, xpm = 0, heroDamage = 0;
 
     recentMatches.forEach(match => {
         kills += match.kills;
         deaths += match.deaths;
         assists += match.assists;
+
+        gpm += match.gold_per_min;
+        xpm += match.xp_per_min;
+        heroDamage += match.hero_damage;
 
         if (match.kills > maxKills) {
             maxKills = match.kills;
@@ -60,30 +69,69 @@ export const mapStatsData = async ({ recentMatches }) => {
             maxAssists = match.assists;
             maxAssistsHero = match.hero_id;
         }
+
+        if (match.gold_per_min > maxGPM) {
+            maxGPM = match.gold_per_min;
+            maxGpmHero = match.hero_id;
+        }
+        if (match.xp_per_min > maxXPM) {
+            maxXPM = match.xp_per_min;
+            maxXpmHero = match.hero_id;
+        }
+        if (match.hero_damage > maxHeroDamage) {
+            maxHeroDamage = match.hero_damage;
+            maxHeroDamageHero = match.hero_id;
+        }
     });
 
-    // Fetch hero images asynchronously
+    // Fetch hero images asynchronously for all max stats heroes
     const maxKillsHeroImage = maxKillsHero ? await heroService.getHeroMiniIconById(maxKillsHero) : null;
     const maxDeathsHeroImage = maxDeathsHero ? await heroService.getHeroMiniIconById(maxDeathsHero) : null;
     const maxAssistsHeroImage = maxAssistsHero ? await heroService.getHeroMiniIconById(maxAssistsHero) : null;
+    const maxGpmHeroImage = maxGpmHero ? await heroService.getHeroMiniIconById(maxGpmHero) : null;
+    const maxXpmHeroImage = maxXpmHero ? await heroService.getHeroMiniIconById(maxXpmHero) : null;
+    const maxHeroDamageHeroImage = maxHeroDamageHero ? await heroService.getHeroMiniIconById(maxHeroDamageHero) : null;
+
+    // For too big numbers
+    const formatNumber = (num) => {
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'k';
+        }
+        return num.toString();
+    };
+
+    const matchCount = recentMatches.length;
 
     return {
-        averageKills: (kills / recentMatches.length).toFixed(1),
-        averageDeaths: (deaths / recentMatches.length).toFixed(1),
-        averageAssists: (assists / recentMatches.length).toFixed(1),
-
+        averageKills: (kills / matchCount).toFixed(1),
         maxKills,
         maxKillsHero,
         maxKillsHeroImage,
 
+        averageDeaths: (deaths / matchCount).toFixed(1),
         maxDeaths,
         maxDeathsHero,
         maxDeathsHeroImage,
 
+        averageAssists: (assists / matchCount).toFixed(1),
         maxAssists,
         maxAssistsHero,
         maxAssistsHeroImage,
+
+        averageGPM: (gpm / matchCount).toFixed(1),
+        maxGPM: formatNumber(maxGPM),
+        maxGpmHero,
+        maxGpmHeroImage,
+
+        averageXPM: (xpm / matchCount).toFixed(1),
+        maxXPM: formatNumber(maxXPM),
+        maxXpmHero,
+        maxXpmHeroImage,
+
+        averageHeroDamage: formatNumber(heroDamage / matchCount),
+        maxHeroDamage: formatNumber(maxHeroDamage),
+        maxHeroDamageHero,
+        maxHeroDamageHeroImage,
     };
 };
-
 
