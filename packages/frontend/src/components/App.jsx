@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import StartPage from 'pages/StartPage';
 import PlayerProfilePage from "pages/PlayerProfilePage";
 import HeroList from 'pages/HeroList';
+import NotFoundPage from "pages/NotFoundPage";
 //import HeroMatrix from './pages/HeroMatrix';
 
 function App() {
