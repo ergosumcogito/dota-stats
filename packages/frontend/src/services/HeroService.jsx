@@ -19,7 +19,7 @@ const getHeroImageById = async (heroId) => {
     if (!hero) return null;
 
     const name = hero.name.replace('npc_dota_hero_', '');
-    return `https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/${name}_full.png`;
+    return `https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/${name}.png`;
 };
 
 const fetchHeroStats = async () => {
@@ -78,7 +78,7 @@ const getHeroStats = async () => {
             id: heroStats.id,
             name: heroStats.name,
             localized_name: heroStats.localized_name,
-            img: `https://cdn.steamstatic.com/apps/dota2/images/heroes/${heroStats.name.replace('npc_dota_hero_', '')}_full.png`,
+            img: `https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/${heroStats.name.replace('npc_dota_hero_', '')}.png`,
             overall_pick_rate: overallPickRate,
             overall_win_rate: heroTotalPicks > 0 ? heroTotalWins / heroTotalPicks : 0,
             high_pick_rate: highStats.pickRate,
