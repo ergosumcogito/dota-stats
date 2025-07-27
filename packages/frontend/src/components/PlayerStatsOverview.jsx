@@ -26,7 +26,7 @@ const StatsOverview = ({ stats }) => {
     if (!stats) return null;
 
     return (
-        <div className="w-full max-w-[500px]">
+        <div className="w-full">
             <h3 className="text-1xl font-bold mb-1 mt-2 text-white">Average/Maximum stats</h3>
 
             <div className="bg-box shadow-lg px-3 py-2 flex flex-wrap gap-6 justify-start">
