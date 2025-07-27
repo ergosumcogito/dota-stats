@@ -92,4 +92,16 @@ const getHeroStats = async () => {
     });
 };
 
-export default { fetchHeroes, getHeroImageById, getHeroStats, getPickRateColor };
+const getHeroMiniIconById = async (heroId) => {
+    const heroes = await fetchHeroes();
+    const hero = heroes.find(h => h.id === +heroId);
+    if (!hero) return null;
+
+    const name = hero.name.replace('npc_dota_hero_', '');
+    return `https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/${name}.png`;
+};
+
+export default { fetchHeroes, getHeroImageById, getHeroMiniIconById, getHeroStats, getPickRateColor };
+
+
+
