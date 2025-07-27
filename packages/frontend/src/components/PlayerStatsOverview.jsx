@@ -53,17 +53,30 @@ const StatsOverview = ({ stats }) => {
                     heroIcon={stats.maxAssistsHeroImage}
                     altText="Hero with max assists"
                 />
-
-                {/*
-                GPM
-                XPM
-                Hero Damage
-                Comebacks
-                Throws
-                APM
-                */}
-
-
+                <StatCard
+                    title="GPM"
+                    average={stats.averageGPM}
+                    max={stats.maxGPM}
+                    heroIcon={stats.maxGpmHeroImage}
+                    altText="Hero with max GPM"
+                    textColor="text-primary"
+                />
+                <StatCard
+                    title="XPM"
+                    average={stats.averageXPM}
+                    max={stats.maxXPM}
+                    heroIcon={stats.maxXpmHeroImage}
+                    altText="Hero with max XPM"
+                    textColor="text-text"
+                />
+                <StatCard
+                    title="Hero Damage"
+                    average={stats.averageHeroDamage}
+                    max={stats.maxHeroDamage}
+                    heroIcon={stats.maxHeroDamageHeroImage}
+                    altText="Hero with max Hero Damage"
+                    textColor="text-text"
+                />
             </div>
         </div>
     );
