@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import heroService from '../services/HeroService';
 import PickRateBar from "components/PickRateBar";
 import WinRateBar from "components/WinRateBar";
+import { Link } from "react-router-dom";
 
 const HeroList = () => {
     const [heroes, setHeroes] = useState([]);
@@ -203,9 +204,12 @@ const HeroList = () => {
                             className="border-b border-background odd:bg-purple-950 even:bg-indigo-950 hover:bg-slate-900 transition-colors"
                         >
                             <td className="py-4 px-6 flex items-center gap-3">
-                                <img src={hero.img} alt={hero.name} className="w-8 h-8 rounded" />
+                                <Link to={`/hero?id=${hero.id}`}>
+                                    <img src={hero.img} alt={hero.name} className="w-8 h-8 rounded hover:scale-110 transition-transform duration-200" />
+                                </Link>
                                 <span className="text-text">{hero.localized_name}</span>
                             </td>
+
                             <td className="py-4 px-6 text-text text-center">
                                 <div style={{ display: 'grid', placeItems: 'center' }}>
                                     <span>{(hero.overall_pick_rate * 100).toFixed(1)}%</span>
