@@ -45,9 +45,9 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
             <h2 className="text-1xl font-bold mb-2">Recent Matches</h2>
             <div className="bg-box shadow-lg px-3 py-2">
                 {recentMatches.slice(0, maxMatches).map((match, index) => {
-                    const isVictory = match.radiant === match.radiant_win
-                        ? match.player_slot < 128
-                        : match.player_slot >= 128;
+                    const isRadiant = match.player_slot < 128;
+                    const isVictory = (isRadiant && match.radiant_win) || (!isRadiant && !match.radiant_win);
+
 
                     const resultColor = isVictory ? 'bg-secondary' : 'bg-accent';
                     const resultTextColor = isVictory ? 'text-secondary' : 'text-accent';
