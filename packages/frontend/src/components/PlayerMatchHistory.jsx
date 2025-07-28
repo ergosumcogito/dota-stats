@@ -59,11 +59,12 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
                     return (
                         <div
                             key={match.match_id || index}
-                            className={`flex items-center p-2 ${backgroundColor} shadow-sm`}
+                            className={`relative flex items-center p-2 ${backgroundColor}`}
                         >
                             {/* Left vertical indicator */}
-                            <div className={`w-1 h-full ${resultColor} mr-3`} />
+                            <div className={`absolute left-0 top-0 bottom-0 w-[7px] ${resultColor}`} />
 
+                            <div className="pl-4 flex items-center w-full">
                             {/* Hero image */}
                             <img
                                 src={heroImages[match.hero_id] || '/images/placeholder.png'}
@@ -83,10 +84,11 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
                             </div>
 
                             {/* KDA */}
-                            <div className="font-mono text-sm ml-auto">
-                                <span className="text-secondary">{match.kills}</span>/
-                                <span className="text-accent">{match.deaths}</span>/
-                                <span className="text-text">{match.assists}</span>
+                            <div className="font-mono text-sm">
+                                <span className="text-secondary font-bold">{match.kills}</span>/
+                                <span className="text-accent font-bold">{match.deaths}</span>/
+                                <span className="text-text font-bold">{match.assists}</span>
+                            </div>
                             </div>
                         </div>
                     );
