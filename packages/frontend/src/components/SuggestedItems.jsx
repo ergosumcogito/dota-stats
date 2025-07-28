@@ -95,7 +95,7 @@ const Tooltip = ({ data, position }) => {
 const ItemImage = ({ itemKey, details, onHover, onLeave }) => {
   return (
     <img
-      src={`https://cdn.cloudflare.steamstatic.com/apps/dota2/images/items/${itemKey}_lg.png`}
+      src={`https://cdn.steamstatic.com/apps/dota2/images/dota_react/items/${itemKey}.png`}
       alt={itemKey}
       className="w-12 h-12 object-contain transition-transform duration-150 hover:scale-110 cursor-pointer"
       onMouseEnter={(e) => onHover(details, { x: e.clientX, y: e.clientY })}
