@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import heroService from 'services/HeroService';
+import gameModeService from 'services/GameModeService';
 
 const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
     const [heroImages, setHeroImages] = useState({});
+    const [gameModes, setGameModes] = useState({});
 
+    // Fetch hero images
     useEffect(() => {
         if (!recentMatches) return;
 
@@ -22,6 +25,11 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
         });
     }, [recentMatches, maxMatches]);
 
+    // Fetch game modes
+    useEffect(() => {
+        gameModeService.getGameModes().then(setGameModes).catch(console.error);
+    }, []);
+
     if (!recentMatches || recentMatches.length === 0) {
         return <p>No match history available.</p>;
     }
@@ -35,38 +43,48 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
     return (
         <div className="mt-6">
             <h2 className="text-1xl font-bold mb-2">Recent Matches</h2>
-            <div className="bg-box shadow-lg px-3 py-2">
+            <div className="bg-box shadow-lg px-3 py-2 space-y-2">
                 {recentMatches.slice(0, maxMatches).map((match, index) => {
                     const isVictory = match.radiant === match.radiant_win
                         ? match.player_slot < 128
                         : match.player_slot >= 128;
 
-                    // Alternating row colors
-                    const backgroundColor = index % 2 === 0 ? 'bg-background' : 'bg-box';
-
-                    // Color for Victory/Defeat text
+                    const resultColor = isVictory ? 'bg-secondary' : 'bg-accent';
                     const resultTextColor = isVictory ? 'text-secondary' : 'text-accent';
+
+                    const gameModeName = gameModes[match.game_mode] || `Mode ${match.game_mode}`;
 
                     return (
                         <div
                             key={match.match_id || index}
-                            className={`flex items-center justify-between p-2 ${backgroundColor}`}
+                            className="flex items-center p-2 bg-background rounded-md shadow-sm"
                         >
-                            <div className="flex items-center space-x-2">
-                                <img
-                                    src={heroImages[match.hero_id] || '/images/placeholder.png'}
-                                    alt="Hero"
-                                    className="w-10 h-10"
-                                />
-                                <span className={`font-semibold ${resultTextColor}`}>
-                                    {isVictory ? 'Victory' : 'Defeat'}
-                                </span>
+                            {/* Left vertical indicator */}
+                            <div className={`w-1 h-full  ${resultColor} mr-3`} />
+
+                            {/* Hero image */}
+                            <img
+                                src={heroImages[match.hero_id] || '/images/placeholder.png'}
+                                alt="Hero"
+                                className="w-10 h-10 mr-3 flex-shrink-0"
+                            />
+
+                            {/* Victory / Defeat text */}
+                            <span className={`font-semibold ${resultTextColor} w-20`}>
+                                {isVictory ? 'Victory' : 'Defeat'}
+                            </span>
+
+                            {/* Game mode and duration */}
+                            <div className="flex flex-col text-sm text-text w-40">
+                                <span className="font-medium">{gameModeName}</span>
+                                <span className="text-xs">{formatDuration(match.duration)}</span>
                             </div>
-                            <div className="text-sm text-text">
-                                Mode: {match.game_mode}, Duration: {formatDuration(match.duration)}
-                            </div>
-                            <div className="font-mono text-sm">
-                                {match.kills}/{match.deaths}/{match.assists}
+
+                            {/* KDA */}
+                            <div className="font-mono text-sm ml-auto">
+                                <span className="text-secondary">{match.kills}</span>/
+                                <span className="text-accent">{match.deaths}</span>/
+                                <span className="text-text">{match.assists}</span>
                             </div>
                         </div>
                     );
