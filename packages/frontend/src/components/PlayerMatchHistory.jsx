@@ -43,7 +43,7 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
     return (
         <div className="mt-6">
             <h2 className="text-1xl font-bold mb-2">Recent Matches</h2>
-            <div className="bg-box shadow-lg px-3 py-2 space-y-2">
+            <div className="bg-box shadow-lg px-3 py-2">
                 {recentMatches.slice(0, maxMatches).map((match, index) => {
                     const isVictory = match.radiant === match.radiant_win
                         ? match.player_slot < 128
@@ -51,16 +51,18 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
 
                     const resultColor = isVictory ? 'bg-secondary' : 'bg-accent';
                     const resultTextColor = isVictory ? 'text-secondary' : 'text-accent';
-
                     const gameModeName = gameModes[match.game_mode] || `Mode ${match.game_mode}`;
+
+                    // Alternating background color
+                    const backgroundColor = index % 2 === 0 ? 'bg-background' : 'bg-box';
 
                     return (
                         <div
                             key={match.match_id || index}
-                            className="flex items-center p-2 bg-background rounded-md shadow-sm"
+                            className={`flex items-center p-2 ${backgroundColor} shadow-sm`}
                         >
                             {/* Left vertical indicator */}
-                            <div className={`w-1 h-full  ${resultColor} mr-3`} />
+                            <div className={`w-1 h-full ${resultColor} mr-3`} />
 
                             {/* Hero image */}
                             <img
