@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import heroService from 'services/HeroService';
 import gameModeService from 'services/GameModeService';
 
-const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
+const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
     const [heroImages, setHeroImages] = useState({});
     const [gameModes, setGameModes] = useState({});
+    const [matchItems, setMatchItems] = useState({});
 
     // Fetch hero images
     useEffect(() => {
         if (!recentMatches) return;
-
         const heroIds = [...new Set(recentMatches.slice(0, maxMatches).map(m => m.hero_id))];
 
         Promise.all(
@@ -30,15 +30,61 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
         gameModeService.getGameModes().then(setGameModes).catch(console.error);
     }, []);
 
-    if (!recentMatches || recentMatches.length === 0) {
-        return <p>No match history available.</p>;
-    }
+    // Fetch item data for each match/player
+    useEffect(() => {
+        if (!recentMatches) return;
+
+        const matchesToFetch = recentMatches.slice(0, maxMatches);
+
+        Promise.all(matchesToFetch.map(match =>
+            fetch(`https://api.opendota.com/api/matches/${match.match_id}`)
+                .then(res => res.json())
+                .then(data => {
+                    const player = data.players.find(p => p.player_slot === match.player_slot);
+                    if (!player) return null;
+
+                    const items = [
+                        player.item_0, player.item_1, player.item_2,
+                        player.item_3, player.item_4, player.item_5,
+                        player.item_neutral
+                    ].filter(id => id && id !== 0); // ignore 0s
+
+                    return {
+                        matchId: match.match_id,
+                        items,
+                        hasShard: !!player.aghanims_shard,
+                        hasScepter: !!player.aghanims_scepter
+                    };
+                })
+                .catch(err => {
+                    console.error(`Error fetching match ${match.match_id}`, err);
+                    return null;
+                })
+        )).then(results => {
+            const itemsMap = {};
+            results.forEach(itemData => {
+                if (itemData) {
+                    itemsMap[itemData.matchId] = itemData;
+                }
+            });
+            setMatchItems(itemsMap);
+        });
+    }, [recentMatches, maxMatches]);
 
     const formatDuration = (durationInSeconds) => {
         const minutes = Math.floor(durationInSeconds / 60);
         const seconds = durationInSeconds % 60;
         return `${minutes}m ${seconds}s`;
     };
+
+    const getItemImg = (itemId) => {
+        const itemEntry = Object.values(itemsData).find(item => item.id === itemId);
+        return itemEntry ? `https://cdn.cloudflare.steamstatic.com${itemEntry.img}` : '/images/placeholder.png';
+    };
+
+    if (!recentMatches || recentMatches.length === 0) {
+        return <p>No match history available.</p>;
+    }
 
     return (
         <div className="mt-2">
@@ -48,48 +94,53 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20 }) => {
                     const isRadiant = match.player_slot < 128;
                     const isVictory = (isRadiant && match.radiant_win) || (!isRadiant && !match.radiant_win);
 
-
                     const resultColor = isVictory ? 'bg-secondary' : 'bg-accent';
                     const resultTextColor = isVictory ? 'text-secondary' : 'text-accent';
                     const gameModeName = gameModes[match.game_mode] || `Mode ${match.game_mode}`;
-
-                    // Alternating background color
                     const backgroundColor = index % 2 === 0 ? 'bg-background' : 'bg-box';
+
+                    const itemData = matchItems[match.match_id];
 
                     return (
                         <div
                             key={match.match_id || index}
-                            className={`relative flex items-center p-2 ${backgroundColor}`}
+                            className={`relative flex flex-col p-2 ${backgroundColor}`}
                         >
-                            {/* Left vertical indicator */}
                             <div className={`absolute left-0 top-0 bottom-0 w-[7px] ${resultColor}`} />
-
-                            <div className="pl-4 flex items-center w-full">
-                            {/* Hero image */}
-                            <img
-                                src={heroImages[match.hero_id] || '/images/placeholder.png'}
-                                alt="Hero"
-                                className="w-auto h-auto mr-3 max-w-[80px]"
-                            />
-
-                            {/* Victory / Defeat text */}
-                            <span className={`font-semibold ${resultTextColor} w-20`}>
-                                {isVictory ? 'Victory' : 'Defeat'}
-                            </span>
-
-                            {/* Game mode and duration */}
-                            <div className="flex flex-col text-sm text-text w-40">
-                                <span className="font-medium">{gameModeName}</span>
-                                <span className="text-xs">{formatDuration(match.duration)}</span>
+                            <div className="pl-4 flex items-center w-full mb-2">
+                                <img
+                                    src={heroImages[match.hero_id] || '/images/placeholder.png'}
+                                    alt="Hero"
+                                    className="w-auto h-auto mr-3 max-w-[80px]"
+                                />
+                                <span className={`font-semibold ${resultTextColor} w-20`}>
+                                    {isVictory ? 'Victory' : 'Defeat'}
+                                </span>
+                                <div className="flex flex-col text-sm text-text w-40">
+                                    <span className="font-medium">{gameModeName}</span>
+                                    <span className="text-xs">{formatDuration(match.duration)}</span>
+                                </div>
+                                <div className="font-mono text-sm">
+                                    <span className="text-secondary font-bold">{match.kills}</span>/
+                                    <span className="text-accent font-bold">{match.deaths}</span>/
+                                    <span className="text-text font-bold">{match.assists}</span>
+                                </div>
                             </div>
 
-                            {/* KDA */}
-                            <div className="font-mono text-sm">
-                                <span className="text-secondary font-bold">{match.kills}</span>/
-                                <span className="text-accent font-bold">{match.deaths}</span>/
-                                <span className="text-text font-bold">{match.assists}</span>
-                            </div>
-                            </div>
+                            {itemData && (
+                                <div className="pl-4 flex items-center gap-2 flex-wrap">
+                                    {itemData.items.map(id => (
+                                        <img
+                                            key={id}
+                                            src={getItemImg(id)}
+                                            alt={`Item ${id}`}
+                                            className="w-8 h-8"
+                                        />
+                                    ))}
+                                    {itemData.hasScepter && <span className="text-xs text-blue-400">🧿 Scepter</span>}
+                                    {itemData.hasShard && <span className="text-xs text-orange-300">🟠 Shard</span>}
+                                </div>
+                            )}
                         </div>
                     );
                 })}
