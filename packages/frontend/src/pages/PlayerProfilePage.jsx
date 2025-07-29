@@ -35,11 +35,13 @@ const PlayerProfilePage = () => {
         <div className="w-full max-w-5xl px-4">
             <h1>Player Profile (test with ID 127324702, 106305042)</h1>
 
+        <div className="mb-8">
             <SearchBar
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onSearch={() => handleSearch()}
             />
+        </div>
 
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error.message}</p>}
