@@ -58,7 +58,7 @@ const HeroMatrixPage = () => {
                                 <img
                                     src={getImageUrl(hero.name)}
                                     alt={hero.localized_name}
-                                    className="w-auto h-auto md:max-h-[40px] lg:max-h-[50px]"
+                                    className="w-auto h-auto sm:max-h-[30px] md:max-h-[40px] lg:max-h-[50px]"
                                     title={hero.localized_name}
                                 />
                             </a>
