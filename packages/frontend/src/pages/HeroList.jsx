@@ -205,7 +205,7 @@ const HeroList = () => {
                         >
                             <td className="py-4 px-6 flex items-center gap-3">
                                 <Link to={`/hero?id=${hero.id}`}>
-                                    <img src={hero.img} alt={hero.name} className="w-8 h-8 rounded hover:scale-110 transition-transform duration-200" />
+                                    <img src={hero.img} alt={hero.name} className="w-auto h-auto max-w-[60px] rounded hover:scale-110 transition-transform duration-200" />
                                 </Link>
                                 <Link to={`/hero?id=${hero.id}`}>
                                     <span className="text-text hover:text-primary transition">{hero.localized_name}</span>

@@ -38,12 +38,12 @@ const HeroHeader = ({ hero }) => {
 
   return (
     <div className="w-full bg-gradient-to-r from-[#122f38] to-[#1e4954] rounded-md p-8 flex items-start justify-between text-white">
-      {/* Левая часть */}
+      {/* Left part */}
       <div className="flex gap-6 items-start">
         <img
           src={`https://cdn.cloudflare.steamstatic.com${img}`}
           alt={localized_name}
-          className="w-[130px] h-[130px] object-cover rounded"
+          className="w-auto h-auto max-h-[130px] object-cover rounded"
         />
         <div className="flex flex-col gap-3">
           <div>
@@ -51,7 +51,7 @@ const HeroHeader = ({ hero }) => {
             <p className="text-base text-gray-300 mt-1">{roles.join(" · ").toUpperCase()}</p>
           </div>
 
-          {/* Атрибуты */}
+          {/* Attributes */}
           <div className="flex gap-6 text-xl mt-2">
             <div className="flex items-center gap-2 text-red-400">
               <img src={getAttrIcon("str")} alt="str" className="w-5 h-5" />
@@ -69,7 +69,7 @@ const HeroHeader = ({ hero }) => {
         </div>
       </div>
 
-      {/* Правая часть — Статы */}
+      {/* Right part — Stats */}
       <div className="grid grid-cols-2 gap-x-12 gap-y-3 text-lg leading-relaxed text-white text-right">
         <p><strong>Health:</strong> {base_health}</p>
         <p><strong>Health Regen:</strong> {base_health_regen}</p>

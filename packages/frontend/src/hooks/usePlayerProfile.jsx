@@ -5,6 +5,7 @@ import { mapHeaderData, mapStatsData } from 'utils/PlayerMappers';
 export const usePlayerProfile = (playerId) => {
     const [playerProfileData, setPlayerProfileData] = useState(null);
     const [playerStatsData, setPlayerStatsData] = useState(null);
+    const [rawRecentMatches, setRawRecentMatches] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -12,6 +13,7 @@ export const usePlayerProfile = (playerId) => {
         if (!playerId) {
             setPlayerProfileData(null);
             setPlayerStatsData(null);
+            setRawRecentMatches(null);
             return;
         }
 
@@ -22,12 +24,15 @@ export const usePlayerProfile = (playerId) => {
                 const rawData = await playerProfileService.fetchPlayerRawData(playerId);
                 const mappedHeader = await mapHeaderData(rawData);
                 const mappedStats = await mapStatsData({recentMatches: rawData.recentMatches});
+
                 setPlayerProfileData(mappedHeader);
                 setPlayerStatsData(mappedStats);
+                setRawRecentMatches(rawData.recentMatches);
             } catch (e) {
                 setError(e);
                 setPlayerProfileData(null);
                 setPlayerStatsData(null);
+                setRawRecentMatches(null);
             } finally {
                 setLoading(false);
             }
@@ -36,5 +41,5 @@ export const usePlayerProfile = (playerId) => {
         fetchData();
     }, [playerId]);
 
-    return { playerProfileData, playerStatsData, loading, error };
+    return { playerProfileData, playerStatsData, rawRecentMatches, loading, error };
 };

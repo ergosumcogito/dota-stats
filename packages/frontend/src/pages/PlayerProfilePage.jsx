@@ -3,11 +3,12 @@ import PlayerProfileHeader from 'components/PlayerProfileHeader';
 import { usePlayerProfile } from 'hooks/usePlayerProfile';
 import { useParams } from "react-router-dom";
 import PlayerStatsOverview from "components/PlayerStatsOverview";
+import PlayerMatchHistory from "components/PlayerMatchHistory";
 
 const PlayerProfilePage = () => {
     const { playerId: playerIdFromUrl } = useParams(); // get playerId from URL
     const [playerId, setPlayerId] = useState(playerIdFromUrl|| '');
-    const { playerProfileData, playerStatsData, loading, error } = usePlayerProfile(playerId);
+    const { playerProfileData, playerStatsData, rawRecentMatches, loading, error } = usePlayerProfile(playerId);
 
     useEffect(() => {
         if (playerIdFromUrl && playerIdFromUrl !== playerId) {
@@ -24,6 +25,7 @@ const PlayerProfilePage = () => {
             {error && <p style={{ color: 'red' }}>{error.message}</p>}
             {playerProfileData && <PlayerProfileHeader playerProfileData={playerProfileData} />}
             {playerStatsData && <PlayerStatsOverview stats={playerStatsData} />}
+            {rawRecentMatches && <PlayerMatchHistory recentMatches={rawRecentMatches} />}
         </div>
         </div>
     );

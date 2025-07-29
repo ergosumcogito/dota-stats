@@ -95,7 +95,7 @@ const RankSection = ({ rank_tier, rank_icon, leaderboard_rank }) => (
             />
         )}
         <p className="text-sm">
-            <span className="font-semibold">Rank Tier:</span> {rank_tier || 'N/A'}
+            {/*<span className="font-semibold">Rank Tier:</span> {rank_tier || 'N/A'}*/}
         </p>
         {leaderboard_rank && (
             <p className="text-yellow-400 text-sm">#{leaderboard_rank}</p>
