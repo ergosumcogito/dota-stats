@@ -111,7 +111,7 @@ const HeroList = () => {
     const sortedHeroes = getSortedHeroes();
 
     return (
-        <div className="p-0 h-screen w-full mx-auto">
+        <div className="p-8 h-screen w-full mx-auto">
             <h1 className="text-3xl font-bold text-text mb-6 text-center">Heroes in Public Matches</h1>
             <div className="overflow-x-auto bg-box rounded-lg shadow-lg">
                 <table className="w-full text-base">
@@ -207,7 +207,9 @@ const HeroList = () => {
                                 <Link to={`/hero?id=${hero.id}`}>
                                     <img src={hero.img} alt={hero.name} className="w-8 h-8 rounded hover:scale-110 transition-transform duration-200" />
                                 </Link>
-                                <span className="text-text">{hero.localized_name}</span>
+                                <Link to={`/hero?id=${hero.id}`}>
+                                    <span className="text-text hover:text-primary transition">{hero.localized_name}</span>
+                                </Link>
                             </td>
 
                             <td className="py-4 px-6 text-text text-center">
