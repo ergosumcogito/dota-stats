@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import heroService from '../services/HeroService';
 import PickRateBar from "components/PickRateBar";
 import WinRateBar from "components/WinRateBar";
+import { Link } from "react-router-dom";
 
 const HeroList = () => {
     const [heroes, setHeroes] = useState([]);
@@ -110,7 +111,7 @@ const HeroList = () => {
     const sortedHeroes = getSortedHeroes();
 
     return (
-        <div className="p-0 h-screen w-full mx-auto">
+        <div className="p-8 h-screen w-full mx-auto">
             <h1 className="text-3xl font-bold text-text mb-6 text-center">Heroes in Public Matches</h1>
             <div className="overflow-x-auto bg-box rounded-lg shadow-lg">
                 <table className="w-full text-base">
@@ -203,9 +204,14 @@ const HeroList = () => {
                             className="border-b border-background odd:bg-purple-950 even:bg-indigo-950 hover:bg-slate-900 transition-colors"
                         >
                             <td className="py-4 px-6 flex items-center gap-3">
-                                <img src={hero.img} alt={hero.name} className="w-8 h-8 rounded" />
-                                <span className="text-text">{hero.localized_name}</span>
+                                <Link to={`/hero?id=${hero.id}`}>
+                                    <img src={hero.img} alt={hero.name} className="w-8 h-8 rounded hover:scale-110 transition-transform duration-200" />
+                                </Link>
+                                <Link to={`/hero?id=${hero.id}`}>
+                                    <span className="text-text hover:text-primary transition">{hero.localized_name}</span>
+                                </Link>
                             </td>
+
                             <td className="py-4 px-6 text-text text-center">
                                 <div style={{ display: 'grid', placeItems: 'center' }}>
                                     <span>{(hero.overall_pick_rate * 100).toFixed(1)}%</span>

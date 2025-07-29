@@ -8,9 +8,9 @@ const SearchBar = ({ value, onChange, onSearch }) => {
     };
 
     return (
-        <div className="flex flex-col items-center p-4">
+        <div className="flex items-center space-x-2">
             <input
-                className="p-2 border rounded-md"
+                className="h-10 px-3 border rounded-md focus:outline-none"
                 type="text"
                 placeholder="Enter Player ID"
                 value={value}
@@ -18,7 +18,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
                 onKeyDown={handleKeyDown}
             />
             <button
-                className="mt-2 p-2 bg-primary text-text rounded"
+                className="h-10 px-4 bg-primary text-text rounded flex items-center justify-center focus:outline-none cursor-pointer"
                 onClick={onSearch}
             >
                 Search
