@@ -21,8 +21,8 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
     const setCachedMatchData = (matchId, data) => {
         try {
             localStorage.setItem(`match_${matchId}`, JSON.stringify(data));
-        } catch {
-            // TODO add here
+        } catch (err) {
+            console.error(`Failed to cache match ${matchId} to localStorage`, err);
         }
     };
 
@@ -153,17 +153,17 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
                                 </div>
 
                             {itemData && (
-                                <div className="pl-4 flex items-center gap-2 flex-wrap">
+                                <div className="pl-4 flex items-center flex-wrap">
                                     {itemData.items.map(id => (
                                         <img
                                             key={id}
                                             src={getItemImg(id)}
                                             alt={`Item ${id}`}
-                                            className="w-8 h-8"
+                                            className="w-auto h-auto max-h-[30px]"
                                         />
                                     ))}
-                                    {itemData.hasScepter && <span className="text-xs font-bold text-yellow-500">🌟 Scepter</span>}
-                                    {itemData.hasShard && <span className="text-xs font-bold text-blue-500">🔷 Shard</span>}
+                                    {itemData.hasScepter && <span className="text-xs pl-3 font-bold text-yellow-500">🌟 Scepter</span>}
+                                    {itemData.hasShard && <span className="text-xs pl-3 font-bold text-blue-500">🔷 Shard</span>}
                                 </div>
                             )}
                             </div>
