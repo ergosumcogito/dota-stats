@@ -5,6 +5,7 @@ import Hero from 'pages/Hero';
 import NotFoundPage from "pages/NotFoundPage";
 import HeroList from "pages/HeroList";
 import Navbar from 'components/NavBar';
+import HeroMatrixPage from "pages/HeroMatrixPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/" element={<StartPage />} />
                 <Route path="/player-search/:playerId?" element={<PlayerProfilePage />} />
                 <Route path="/hero-list" element={<HeroList />} />
+                <Route path="/hero-matrix" element={<HeroMatrixPage />} />
                 <Route path="/hero" element={<Hero />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
