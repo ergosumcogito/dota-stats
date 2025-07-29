@@ -7,7 +7,26 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
     const [gameModes, setGameModes] = useState({});
     const [matchItems, setMatchItems] = useState({});
 
-    // Fetch hero images
+    // Helper to get cached match data from localStorage
+    const getCachedMatchData = (matchId) => {
+        try {
+            const item = localStorage.getItem(`match_${matchId}`);
+            return item ? JSON.parse(item) : null;
+        } catch {
+            return null;
+        }
+    };
+
+    // Helper to save match data to localStorage
+    const setCachedMatchData = (matchId, data) => {
+        try {
+            localStorage.setItem(`match_${matchId}`, JSON.stringify(data));
+        } catch {
+            // ignore storage errors
+        }
+    };
+
+    // Fetch hero images for recent matches
     useEffect(() => {
         if (!recentMatches) return;
         const heroIds = [...new Set(recentMatches.slice(0, maxMatches).map(m => m.hero_id))];
@@ -25,49 +44,56 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
         });
     }, [recentMatches, maxMatches]);
 
-    // Fetch game modes
+    // Fetch game modes once
     useEffect(() => {
         gameModeService.getGameModes().then(setGameModes).catch(console.error);
     }, []);
 
-    // Fetch item data for each match/player
+    // Fetch match item data with localStorage caching
     useEffect(() => {
         if (!recentMatches) return;
 
         const matchesToFetch = recentMatches.slice(0, maxMatches);
+        const newMatchItems = { ...matchItems };
 
-        Promise.all(matchesToFetch.map(match =>
-            fetch(`https://api.opendota.com/api/matches/${match.match_id}`)
-                .then(res => res.json())
-                .then(data => {
-                    const player = data.players.find(p => p.player_slot === match.player_slot);
-                    if (!player) return null;
+        const fetchPromises = matchesToFetch.map(match => {
+            const cachedData = getCachedMatchData(match.match_id);
+            if (cachedData) {
+                newMatchItems[match.match_id] = cachedData;
+                return Promise.resolve(null);
+            } else {
+                return fetch(`https://api.opendota.com/api/matches/${match.match_id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const player = data.players.find(p => p.player_slot === match.player_slot);
+                        if (!player) return null;
 
-                    const items = [
-                        player.item_0, player.item_1, player.item_2,
-                        player.item_3, player.item_4, player.item_5,
-                        player.item_neutral
-                    ].filter(id => id && id !== 0); // ignore 0s
+                        const items = [
+                            player.item_0, player.item_1, player.item_2,
+                            player.item_3, player.item_4, player.item_5,
+                            player.item_neutral
+                        ].filter(id => id && id !== 0);
 
-                    return {
-                        matchId: match.match_id,
-                        items,
-                        hasShard: !!player.aghanims_shard,
-                        hasScepter: !!player.aghanims_scepter
-                    };
-                })
-                .catch(err => {
-                    console.error(`Error fetching match ${match.match_id}`, err);
-                    return null;
-                })
-        )).then(results => {
-            const itemsMap = {};
-            results.forEach(itemData => {
-                if (itemData) {
-                    itemsMap[itemData.matchId] = itemData;
-                }
-            });
-            setMatchItems(itemsMap);
+                        const itemData = {
+                            matchId: match.match_id,
+                            items,
+                            hasShard: !!player.aghanims_shard,
+                            hasScepter: !!player.aghanims_scepter
+                        };
+
+                        setCachedMatchData(match.match_id, itemData);
+                        newMatchItems[match.match_id] = itemData;
+                        return itemData;
+                    })
+                    .catch(err => {
+                        console.error(`Error fetching match ${match.match_id}`, err);
+                        return null;
+                    });
+            }
+        });
+
+        Promise.all(fetchPromises).then(() => {
+            setMatchItems(newMatchItems);
         });
     }, [recentMatches, maxMatches]);
 

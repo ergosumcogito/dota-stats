@@ -28,7 +28,7 @@ const PlayerProfilePage = () => {
     return (
         <div className="flex justify-center">
             <div className="w-full max-w-5xl px-4">
-                <h1>Player Profile (test with ID 127324702, 106305042)</h1>
+                <h1>Player Profile (test with ID 127324702, 106305042, 113331514)</h1>
 
                 {loading && <p>Loading...</p>}
                 {error && <p style={{ color: 'red' }}>{error.message}</p>}
