@@ -22,7 +22,7 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
         try {
             localStorage.setItem(`match_${matchId}`, JSON.stringify(data));
         } catch {
-            // ignore storage errors
+            // TODO add here
         }
     };
 
@@ -151,7 +151,6 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
                                     <span className="text-accent font-bold">{match.deaths}</span>/
                                     <span className="text-text font-bold">{match.assists}</span>
                                 </div>
-                            </div>
 
                             {itemData && (
                                 <div className="pl-4 flex items-center gap-2 flex-wrap">
@@ -163,10 +162,12 @@ const PlayerMatchHistory = ({ recentMatches, maxMatches = 20, itemsData }) => {
                                             className="w-8 h-8"
                                         />
                                     ))}
-                                    {itemData.hasScepter && <span className="text-xs text-blue-400">🧿 Scepter</span>}
-                                    {itemData.hasShard && <span className="text-xs text-orange-300">🟠 Shard</span>}
+                                    {itemData.hasScepter && <span className="text-xs font-bold text-yellow-500">🌟 Scepter</span>}
+                                    {itemData.hasShard && <span className="text-xs font-bold text-blue-500">🔷 Shard</span>}
                                 </div>
                             )}
+                            </div>
+
                         </div>
                     );
                 })}
