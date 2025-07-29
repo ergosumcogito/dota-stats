@@ -3,15 +3,10 @@
 </p>
 
 ## Dota Stats
+Dota 2 Analytical Website. Built using React, Tailwind and [OpenDota API](https://www.opendota.com/api-keys).
 
-
-### How to clone repo
-1. Install Node.js from official website, add it to PATH during install (usually done automatically, but check)
-2. Check command `node -v` and `npm -v` in terminal
-3. Clone this repo (for example, via https)
-4. Open terminal, enter `packages/frontend` and do `npm install`
-5. Then do `npm run dev` and if you see app on  http://localhost:5173 in browser, all good)
-
-   
-test Dima commit
-test David commit
+### How to run the project
+1. Clone repo: `git clone https://github.com/ergosumcogito/dota-stats.git`.
+2. Enter /dota-stats/packages/frontend folder: `cd dota-stats/packages/frontend`.
+3. Run docker compose: `docker-compose up`. This will build the image and start the container.
+4. Access the website using http://localhost:3000/.
