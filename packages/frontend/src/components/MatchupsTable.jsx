@@ -87,7 +87,7 @@ const MatchupsTable = ({ heroId }) => {
                     <img
                       src={hero.img}
                       alt={hero.name}
-                      className="w-10 h-10"
+                      className="w-auto h-auto max-h-[40px]"
                     />
                     <span className="text-[#b574f9] font-medium text-base hover:underline">
                       {hero.name}
